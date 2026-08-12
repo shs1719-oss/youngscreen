@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>상암영스크린골프존 | 골프존 비전플러스 · 무인 스크린골프</title>
+<meta name="description" content="상암 스크린골프 상암영스크린골프존 — 골프존 비전플러스 5개 룸, 무인 운영, 김캐디 예약, 주차 지원.">
+
+<!-- ================================================================
+  ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+  ★  여기부터 [설정] — 사장님이 수정하는 곳은 여기뿐입니다!      ★
+  ★                                                              ★
+  ★  규칙 딱 3가지:                                              ★
+  ★   1. 따옴표 " " 안의 글자만 바꾸세요                         ★
+  ★   2. 줄 끝의 쉼표(,)는 지우지 마세요                         ★
+  ★   3. 행을 추가할 때는 한 줄 전체를 복사해서 붙여넣으세요     ★
+  ★                                                              ★
+  ★  자세한 방법은 같은 폴더의 "수정방법.txt"를 보세요.          ★
+  ★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★★
+================================================================= -->
+<script>
+const 설정 = {
+
+  // ── 전화번호 (여기 한 곳만 바꾸면 홈페이지 전체에 반영됩니다) ──
+  전화번호: "010-9440-6900",
+
+  // ── 주소 · 영업시간 ──
+  주소: "서울 마포구 월드컵북로54길 11 전자회관 지하 1층",
+  영업시간: "24시간 연중무휴 · 무인 운영",
+
+  // ── 전화번호 아래에 나오는 검색 안내 문구 ──
+  검색안내: "네이버에서 '상암영스크린골프존' 검색",
+
+  // ── 평일 요금표 (1인 기준) ──
+  // 한 줄 = 표의 한 행.  ["시간대", "18홀 가격", "9홀 가격"],
+  // 행 추가: 아무 줄이나 복사해서 아래에 붙여넣고 내용만 고치세요.
+  평일요금: [
+    ["01:00 ~ 10:00 🌙심야", "12,000원", "12,000원"],
+    ["10:00 ~ 13:00", "14,000원", "11,000원"],
+    ["13:00 ~ 17:00", "18,000원", "15,000원"],
+    ["17:00 ~ 22:00", "23,000원", "20,000원"],
+    ["22:00 ~ 익일 01:00 🌙심야", "16,000원", "16,000원"],
+  ],
+
+  // ── 주말 · 공휴일 요금표 (1인 기준) ──
+  주말요금: [
+    ["01:00 ~ 08:00 🌙심야", "14,000원", "14,000원"],
+    ["08:00 ~ 13:00", "18,000원", "14,000원"],
+    ["13:00 ~ 18:00", "18,000원", "15,000원"],
+    ["18:00 ~ 익일 01:00 🌙심야", "16,000원", "16,000원"],
+  ],
+
+  // ── 요금표 아래 안내 문구 ──
+  요금안내: [
+    "🌙 이제 24시간, 언제든지! 무인 시스템으로 새벽에도 라운딩",
+    "💵 현금 결제 시 포인트 7% 적립",
+    "💳 카드 결제 시 포인트 5% 적립 (무인시간 키오스크 3% 자동적립)",
+    "🎁 적립 포인트는 10,000원 이상부터 현금처럼 사용 가능",
+    "📱 김캐디 앱 결제 가능",
+    "🎯 연습 모드: 1인 10분 · 2인 15분 · 3인 이상 20분 무료",
+  ],
+
+  // ── 먹거리 메뉴  ["메뉴이름", "가격"], ──
+  먹거리: [
+    ["캔음료", "2,000원"],
+    ["소주 / 맥주", "5,000원"],
+    ["연태고량주", "20,000원"],
+    ["하이볼 · 라면 · 팝콘 · 안주류", "무인자판기 참고"],
+  ],
+
+  // ── 골프용품  ["용품이름", "가격"], ──
+  용품: [
+    ["골프장갑 (기능성~양피)", "6,000 ~ 12,000원"],
+    ["로스트볼 (컬러볼/타이틀리스트)", "8,000 ~ 13,000원"],
+    ["양말", "3,000원"],
+  ],
+
+  // ── 갤러리 사진 목록  ["images/파일이름", "사진 설명"], ──
+  // 사진 추가: images 폴더에 사진 파일을 넣고 여기에 한 줄 추가하세요.
+  갤러리: [
+    ["images/room-big.jpg", "대형 룸 내부"],
+    ["images/lounge.jpg", "라운지와 하우스채"],
+    ["images/photo1.jpg", "매장 사진 1"],
+    ["images/photo2.jpg", "매장 사진 2"],
+    ["images/photo3.jpg", "매장 사진 3"],
+    ["images/photo4.jpg", "매장 사진 4"],
+    ["images/photo5.jpg", "매장 사진 5"],
+    ["images/photo6.jpg", "매장 사진 6"],
+    ["images/entrance.jpg", "매장 입구"],
+  ],
+
+  // ── 메뉴 옆에 나오는 사진  ["images/파일이름", "사진 설명"], ──
+  // ※ 무인자판기 사진을 찍어서 "vending.jpg" 라는 이름으로
+  //    images 폴더에 넣으면 자동으로 나타납니다.
+  음식사진: [
+    ["images/vending.jpg", "무인자판기"],
+  ],
+
+  // ── 무인 매장 이용 방법  ["제목", "설명"], ──
+  // 설명에 {전화번호} 라고 쓰면 위의 전화번호가 자동으로 들어갑니다.
+  이용방법: [
+    ["예약하기", "김캐디 앱 또는 전화({전화번호})로 원하는 시간을 예약하세요."],
+    ["매장 입장", "예약 시간에 맞춰 방문하시면 안내에 따라 배정된 룸으로 입장합니다."],
+    ["플레이", "룸의 골프존 비전플러스에서 라운딩을 시작하세요. 하우스채는 무료입니다."],
+    ["결제", "김캐디 앱 결제, 카드, 현금·계좌이체 모두 가능합니다. (현금 7%·카드 5% 포인트 적립)"],
+  ],
+
+  // ── 이벤트 · 혜택 카드  ["아이콘", "작은제목", "큰제목", "설명"], ──
+  이벤트: [
+    ["💳", "선불권 충전 혜택", "최대 10% 추가 적립",
+     "30만원 충전 → +5% (15,000원) · 50만원 충전 → +10% (50,000원) 추가 적립. 유효기간 충전일로부터 1년, 충전 고객께는 개인 락커 무료 제공!"],
+    ["⛳", "연속 플레이 혜택", "이어서 치면 2,000원 할인",
+     "치다 보면 아쉬운 한 게임! 두 게임 연속 플레이 시 2,000원 할인됩니다."],
+    ["🎯", "연습 패키지", "연습권 10회 150,000원",
+     "1회 1시간 · 회당 15,000원. 결제 시 원포인트 제공!"],
+    ["🏆", "단골 손님 혜택", "한 달 10회 이용 시 원포인트",
+     "한 달 기준 스크린 10회 달성 시, 10번째 라운딩엔 원포인트가 따라옵니다."],
+  ],
+
+};
+</script>
+<!-- ================================================================
+  ★  [설정] 끝 — 여기 아래로는 건드리지 마세요!  ★
+================================================================= -->
+
+<style>
+  :root{
+    --bg:#101318; --bg2:#181d24; --card:#1f252e; --line:#2c3440;
+    --green:#3ddc84; --green-d:#22b566; --gold:#e8c574;
+    --tx:#eef1f5; --tx2:#aab4c0; --tx3:#77828f;
+  }
+  *{margin:0;padding:0;box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{font-family:'Pretendard','Malgun Gothic','Apple SD Gothic Neo',sans-serif;background:var(--bg);color:var(--tx);line-height:1.6}
+  img{max-width:100%;display:block}
+  a{color:inherit;text-decoration:none}
+  .wrap{max-width:1080px;margin:0 auto;padding:0 20px}
+  section{padding:72px 0}
+  h2{font-size:1.9rem;margin-bottom:8px;letter-spacing:-.02em}
+  .sub{color:var(--green);font-weight:700;font-size:.85rem;letter-spacing:.18em;text-transform:uppercase}
+  .desc{color:var(--tx2);margin-bottom:36px}
+
+  /* nav */
+  nav{position:fixed;top:0;left:0;right:0;z-index:50;background:rgba(16,19,24,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .nav-in{max-width:1080px;margin:0 auto;padding:0 20px;height:60px;display:flex;align-items:center;justify-content:space-between}
+  .logo{font-weight:800;font-size:1.05rem}
+  .logo em{color:var(--green);font-style:normal}
+  .menu{display:flex;gap:22px;font-size:.9rem;color:var(--tx2)}
+  .menu a:hover{color:var(--green)}
+  .call-btn{background:var(--green);color:#0b2916;font-weight:700;padding:8px 16px;border-radius:24px;font-size:.85rem}
+  @media(max-width:760px){.menu{display:none}}
+
+  /* hero */
+  header{position:relative;min-height:88vh;display:flex;align-items:center;
+    background:linear-gradient(rgba(10,13,17,.55),rgba(16,19,24,.92)),url('images/entrance.jpg') center/cover}
+  .hero{padding:120px 0 60px}
+  .badge{display:inline-block;background:rgba(61,220,132,.15);border:1px solid var(--green);color:var(--green);
+    font-size:.8rem;font-weight:700;padding:6px 14px;border-radius:20px;margin-bottom:18px}
+  h1{font-size:clamp(2rem,5.5vw,3.4rem);line-height:1.25;letter-spacing:-.03em;margin-bottom:14px}
+  h1 em{color:var(--green);font-style:normal}
+  .hero p{color:var(--tx2);font-size:1.05rem;max-width:560px}
+  .cta{display:flex;gap:12px;margin-top:30px;flex-wrap:wrap}
+  .btn{padding:14px 28px;border-radius:8px;font-weight:700;font-size:1rem}
+  .btn-g{background:var(--green);color:#0b2916}
+  .btn-o{border:1px solid var(--tx3);color:var(--tx)}
+  .btn:hover{transform:translateY(-2px);transition:.2s}
+
+  /* feature cards */
+  .grid{display:grid;gap:18px}
+  .g3{grid-template-columns:repeat(3,1fr)}
+  .g4{grid-template-columns:repeat(4,1fr)}
+  @media(max-width:860px){.g3,.g4{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:520px){.g3,.g4{grid-template-columns:1fr}}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px}
+  .card .ic{font-size:1.8rem;margin-bottom:12px}
+  .card h3{font-size:1.05rem;margin-bottom:6px}
+  .card p{color:var(--tx2);font-size:.9rem}
+  .ev-tag{color:var(--gold);font-size:.78rem;font-weight:700;letter-spacing:.12em;margin-bottom:6px}
+  .ev-card h3{color:var(--gold)}
+
+  /* gallery */
+  .gal{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .gal img{border-radius:12px;aspect-ratio:4/3;object-fit:cover;cursor:pointer;transition:.25s}
+  .gal img:hover{transform:scale(1.02)}
+  @media(max-width:640px){.gal{grid-template-columns:repeat(2,1fr)}}
+
+  /* price */
+  .price-tabs{display:flex;gap:10px;margin-bottom:22px}
+  .ptab{padding:10px 22px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--tx2);font-weight:700;cursor:pointer;font-size:.95rem}
+  .ptab.on{background:var(--green);border-color:var(--green);color:#0b2916}
+  table{width:100%;border-collapse:collapse;background:var(--card);border-radius:14px;overflow:hidden}
+  th,td{padding:15px 12px;text-align:center;border-bottom:1px solid var(--line);font-size:.95rem}
+  th{background:#242b35;color:var(--tx2);font-size:.85rem;letter-spacing:.05em}
+  td strong{color:var(--green);font-size:1.05rem}
+  tr:last-child td{border-bottom:none}
+  .note{color:var(--tx3);font-size:.85rem;margin-top:14px}
+  .note li{margin-left:18px;margin-top:4px}
+  .tbl-wrap{overflow-x:auto}
+  #wk{display:none}
+
+  /* menu */
+  .menu-flex{display:grid;grid-template-columns:1.1fr .9fr;gap:24px;align-items:start}
+  @media(max-width:820px){.menu-flex{grid-template-columns:1fr}}
+  .mlist{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:10px 24px}
+  .mrow{display:flex;justify-content:space-between;padding:13px 0;border-bottom:1px dashed var(--line);font-size:.95rem}
+  .mrow:last-child{border-bottom:none}
+  .mrow b{color:var(--gold)}
+  .food-imgs{display:grid;gap:12px}
+  .food-imgs img{border-radius:12px}
+
+  /* steps */
+  .steps{counter-reset:s}
+  .step{display:flex;gap:18px;padding:20px 0;border-bottom:1px solid var(--line);align-items:flex-start}
+  .step:last-child{border-bottom:none}
+  .step:before{counter-increment:s;content:counter(s);flex:0 0 40px;height:40px;border-radius:50%;
+    background:var(--green);color:#0b2916;font-weight:800;display:flex;align-items:center;justify-content:center;font-size:1.1rem}
+  .step h3{font-size:1.05rem}
+  .step p{color:var(--tx2);font-size:.92rem}
+
+  /* faq */
+  details{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-bottom:12px;padding:0 22px}
+  summary{padding:18px 0;font-weight:700;cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:center}
+  summary:after{content:"+";color:var(--green);font-size:1.3rem;font-weight:400}
+  details[open] summary:after{content:"−"}
+  details p{color:var(--tx2);padding-bottom:18px;font-size:.93rem}
+
+  /* contact */
+  .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+  @media(max-width:760px){.contact-grid{grid-template-columns:1fr}}
+  .big-call{font-size:2rem;font-weight:800;color:var(--green);margin:8px 0}
+
+  footer{border-top:1px solid var(--line);padding:34px 0;color:var(--tx3);font-size:.85rem;text-align:center}
+
+  /* lightbox */
+  #lb{position:fixed;inset:0;background:rgba(0,0,0,.9);display:none;align-items:center;justify-content:center;z-index:99;cursor:zoom-out}
+  #lb img{max-width:92vw;max-height:90vh;border-radius:8px;aspect-ratio:auto;object-fit:contain}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <a class="logo" href="#">상암<em>영스크린</em>골프존</a>
+    <div class="menu">
+      <a href="#rooms">매장안내</a><a href="#gallery">갤러리</a><a href="#price">이용요금</a>
+      <a href="#event">이벤트</a><a href="#food">메뉴</a><a href="#guide">이용방법</a><a href="#contact">오시는길</a>
+    </div>
+    <a class="call-btn js-tel" href="tel:01094406900">📞 <span class="js-phone">010-9440-6900</span></a>
+  </div>
+</nav>
+
+<header>
+  <div class="wrap hero">
+    <span class="badge">⛳ GOLFZON VISION PLUS · 무인 운영</span>
+    <h1>기다림 없이, 프리미엄 스크린골프<br><em>상암영스크린골프존</em></h1>
+    <p>골프존 비전플러스 5개 룸 · 무인 시스템으로 간편한 입장과 결제 · 김캐디 앱으로 실시간 예약 · 주차 지원</p>
+    <div class="cta">
+      <a class="btn btn-g js-tel" href="tel:01094406900">전화 예약</a>
+      <a class="btn btn-o" href="#price">요금 보기</a>
+    </div>
+  </div>
+</header>
+
+<section id="rooms">
+  <div class="wrap">
+    <div class="sub">FACILITY</div>
+    <h2>매장 안내</h2>
+    <p class="desc">골프존 최신 시뮬레이터와 쾌적한 시설을 갖췄습니다.</p>
+    <div class="grid g4">
+      <div class="card"><div class="ic">🏌️</div><h3>골프존 비전플러스</h3><p>5개 룸 전 타석 GOLFZON VISION+ 시뮬레이터 · 빔프로젝터</p></div>
+      <div class="card"><div class="ic">🛋️</div><h3>단체 모임룸</h3><p>넓은 소파석을 갖춘 대형 룸 — 모임·회식 겸 라운딩에 최적</p></div>
+      <div class="card"><div class="ic">🏌️‍♀️</div><h3>하우스채 무료</h3><p>PING · Callaway · TaylorMade 등 남녀 클럽 풀세트 무료 대여</p></div>
+      <div class="card"><div class="ic">🅿️</div><h3>주차 지원</h3><p>건물 주차장 이용 가능, 매장에서 주차 등록 지원</p></div>
+      <div class="card"><div class="ic">🤖</div><h3>무인 시스템</h3><p>비대면 입장·결제로 기다림 없이 바로 플레이</p></div>
+      <div class="card"><div class="ic">📱</div><h3>김캐디 예약</h3><p>김캐디 앱에서 실시간 예약 및 결제 가능</p></div>
+      <div class="card"><div class="ic">🍜</div><h3>푸드 & 주류</h3><p>라면·안주·맥주·하이볼까지 룸에서 편하게</p></div>
+      <div class="card"><div class="ic">🎯</div><h3>연습 모드 서비스</h3><p>플레이 전 무료 연습 제공 (1인 10분 · 2인 15분 · 3인 이상 20분)</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="gallery" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sub">GALLERY</div>
+    <h2>매장 둘러보기</h2>
+    <p class="desc">사진을 누르면 크게 볼 수 있습니다.</p>
+    <div class="gal" id="gal-list">
+      <img src="images/room-big.jpg" alt="대형 룸 내부" loading="lazy">
+      <img src="images/lounge.jpg" alt="라운지와 하우스채" loading="lazy">
+      <img src="images/photo1.jpg" alt="매장 사진 1" loading="lazy">
+      <img src="images/photo2.jpg" alt="매장 사진 2" loading="lazy">
+      <img src="images/photo3.jpg" alt="매장 사진 3" loading="lazy">
+      <img src="images/photo4.jpg" alt="매장 사진 4" loading="lazy">
+      <img src="images/photo5.jpg" alt="매장 사진 5" loading="lazy">
+      <img src="images/photo6.jpg" alt="매장 사진 6" loading="lazy">
+      <img src="images/entrance.jpg" alt="매장 입구" loading="lazy">
+    </div>
+  </div>
+</section>
+
+<section id="price">
+  <div class="wrap">
+    <div class="sub">PRICE</div>
+    <h2>이용요금</h2>
+    <p class="desc">1인 · 그린피 기준</p>
+    <div class="price-tabs">
+      <button class="ptab on" onclick="showP('wd',this)">평일</button>
+      <button class="ptab" onclick="showP('wk',this)">주말 · 공휴일</button>
+    </div>
+    <div class="tbl-wrap" id="wd">
+      <table>
+        <thead><tr><th>시간</th><th>18홀</th><th>9홀</th></tr></thead>
+        <tbody id="wd-body">
+          <tr><td>01:00 ~ 10:00 🌙심야</td><td><strong>12,000원</strong></td><td>12,000원</td></tr>
+          <tr><td>10:00 ~ 13:00</td><td><strong>14,000원</strong></td><td>11,000원</td></tr>
+          <tr><td>13:00 ~ 17:00</td><td><strong>18,000원</strong></td><td>15,000원</td></tr>
+          <tr><td>17:00 ~ 22:00</td><td><strong>23,000원</strong></td><td>20,000원</td></tr>
+          <tr><td>22:00 ~ 익일 01:00 🌙심야</td><td><strong>16,000원</strong></td><td>16,000원</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="tbl-wrap" id="wk">
+      <table>
+        <thead><tr><th>시간</th><th>18홀</th><th>9홀</th></tr></thead>
+        <tbody id="wk-body">
+          <tr><td>01:00 ~ 08:00 🌙심야</td><td><strong>14,000원</strong></td><td>14,000원</td></tr>
+          <tr><td>08:00 ~ 13:00</td><td><strong>18,000원</strong></td><td>14,000원</td></tr>
+          <tr><td>13:00 ~ 18:00</td><td><strong>18,000원</strong></td><td>15,000원</td></tr>
+          <tr><td>18:00 ~ 익일 01:00 🌙심야</td><td><strong>16,000원</strong></td><td>16,000원</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <ul class="note" id="price-notes">
+      <li>🌙 이제 24시간, 언제든지! 무인 시스템으로 새벽에도 라운딩</li>
+      <li>💵 현금 결제 시 포인트 7% 적립</li>
+      <li>💳 카드 결제 시 포인트 5% 적립 (무인시간 키오스크 3% 자동적립)</li>
+      <li>🎁 적립 포인트는 10,000원 이상부터 현금처럼 사용 가능</li>
+      <li>📱 김캐디 앱 결제 가능</li>
+      <li>🎯 연습 모드: 1인 10분 · 2인 15분 · 3인 이상 20분 무료</li>
+    </ul>
+  </div>
+</section>
+
+<section id="event" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sub">EVENT</div>
+    <h2>이벤트 · 혜택</h2>
+    <p class="desc">24시간 무인 전환 기념, 알뜰하게 이용하세요.</p>
+    <div class="grid g4" id="event-list">
+      <div class="card ev-card"><div class="ic">💳</div><div class="ev-tag">선불권 충전 혜택</div><h3>최대 10% 추가 적립</h3><p>30만원 충전 → +5% (15,000원) · 50만원 충전 → +10% (50,000원) 추가 적립. 유효기간 충전일로부터 1년, 충전 고객께는 개인 락커 무료 제공!</p></div>
+      <div class="card ev-card"><div class="ic">⛳</div><div class="ev-tag">연속 플레이 혜택</div><h3>이어서 치면 2,000원 할인</h3><p>치다 보면 아쉬운 한 게임! 두 게임 연속 플레이 시 2,000원 할인됩니다.</p></div>
+      <div class="card ev-card"><div class="ic">🎯</div><div class="ev-tag">연습 패키지</div><h3>연습권 10회 150,000원</h3><p>1회 1시간 · 회당 15,000원. 결제 시 원포인트 제공!</p></div>
+      <div class="card ev-card"><div class="ic">🏆</div><div class="ev-tag">단골 손님 혜택</div><h3>한 달 10회 이용 시 원포인트</h3><p>한 달 기준 스크린 10회 달성 시, 10번째 라운딩엔 원포인트가 따라옵니다.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="food">
+  <div class="wrap">
+    <div class="sub">FOOD & GOODS</div>
+    <h2>메뉴 · 용품</h2>
+    <p class="desc">라운딩 중 룸에서 편하게 즐기세요.</p>
+    <div class="menu-flex">
+      <div>
+        <div class="mlist" id="mlist-food">
+          <div class="mrow"><span>캔음료</span><b>2,000원</b></div>
+          <div class="mrow"><span>소주 / 맥주</span><b>5,000원</b></div>
+          <div class="mrow"><span>연태고량주</span><b>20,000원</b></div>
+          <div class="mrow"><span>하이볼 · 라면 · 팝콘 · 안주류</span><b>무인자판기 참고</b></div>
+        </div>
+        <div class="mlist" id="mlist-goods" style="margin-top:14px">
+          <div class="mrow"><span>골프장갑 (기능성~양피)</span><b>6,000 ~ 12,000원</b></div>
+          <div class="mrow"><span>로스트볼 (컬러볼/타이틀리스트)</span><b>8,000 ~ 13,000원</b></div>
+          <div class="mrow"><span>양말</span><b>3,000원</b></div>
+        </div>
+      </div>
+      <div class="food-imgs" id="food-imgs">
+        <img src="images/vending.jpg" alt="무인자판기" loading="lazy" onerror="this.style.display='none'">
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="guide" style="background:var(--bg2)">
+  <div class="wrap">
+    <div class="sub">HOW TO USE</div>
+    <h2>무인 매장 이용 방법</h2>
+    <p class="desc">처음 오셔도 어렵지 않아요.</p>
+    <div class="steps" id="steps-list">
+      <div class="step"><div><h3>예약하기</h3><p>김캐디 앱 또는 전화(<span class="js-phone">010-9440-6900</span>)로 원하는 시간을 예약하세요.</p></div></div>
+      <div class="step"><div><h3>매장 입장</h3><p>예약 시간에 맞춰 방문하시면 안내에 따라 배정된 룸으로 입장합니다.</p></div></div>
+      <div class="step"><div><h3>플레이</h3><p>룸의 골프존 비전플러스에서 라운딩을 시작하세요. 하우스채는 무료입니다.</p></div></div>
+      <div class="step"><div><h3>결제</h3><p>김캐디 앱 결제, 카드, 현금·계좌이체 모두 가능합니다. (현금 7%·카드 5% 포인트 적립)</p></div></div>
+    </div>
+  </div>
+</section>
+
+<section id="contact">
+  <div class="wrap">
+    <div class="sub">CONTACT</div>
+    <h2>오시는 길 · 문의</h2>
+    <div class="contact-grid" style="margin-top:26px">
+      <div class="card">
+        <h3>전화 문의 · 예약</h3>
+        <div class="big-call"><a class="js-tel" href="tel:01094406900"><span class="js-phone">010-9440-6900</span></a></div>
+        <p style="color:var(--tx2);font-size:.92rem" class="js-search">네이버에서 '상암영스크린골프존' 검색</p>
+      </div>
+      <div class="card">
+        <h3>주소 · 영업시간</h3>
+        <p style="color:var(--tx2);margin:8px 0">📍 <span class="js-addr">서울 마포구 월드컵북로54길 11 전자회관 지하 1층</span></p>
+        <p style="color:var(--tx2)">🕐 <span class="js-hours">24시간 연중무휴 · 무인 운영</span></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    상암영스크린골프존 · GOLFZON VISION PLUS<br>
+    TEL <span class="js-phone">010-9440-6900</span> · © 2026 SANGAM YOUNG SCREEN GOLF
+  </div>
+</footer>
+
+<div id="lb" onclick="this.style.display='none'"><img id="lbimg" src="" alt="확대 사진"></div>
+
+<script>
+/* ── 요금표 평일/주말 탭 전환 ── */
+function showP(id,btn){
+  document.getElementById('wd').style.display = id==='wd'?'block':'none';
+  document.getElementById('wk').style.display = id==='wk'?'block':'none';
+  document.querySelectorAll('.ptab').forEach(b=>b.classList.remove('on'));
+  btn.classList.add('on');
+}
+
+/* ── 갤러리 사진 확대 (클릭) ── */
+document.getElementById('gal-list').addEventListener('click', function(e){
+  if(e.target.tagName === 'IMG'){
+    document.getElementById('lbimg').src = e.target.src;
+    document.getElementById('lb').style.display = 'flex';
+  }
+});
+
+/* ── 위쪽 [설정] 내용을 페이지에 채워넣는 부분 ── */
+(function(){
+  if(typeof 설정 === 'undefined'){
+    // 설정에 오타(쉼표·따옴표 누락 등)가 있으면 여기로 옵니다.
+    var w = document.createElement('div');
+    w.style.cssText = 'position:fixed;top:0;left:0;right:0;z-index:999;background:#c0392b;color:#fff;padding:10px 16px;text-align:center;font-size:14px;font-weight:700';
+    w.textContent = '⚠ 위쪽 [설정] 부분에 오타가 있어 이전 내용으로 표시 중입니다. 쉼표(,)와 따옴표(")가 빠지지 않았는지 확인하세요.';
+    document.body.appendChild(w);
+    return;
+  }
+
+  // 전화번호
+  var telHref = 'tel:' + 설정.전화번호.replace(/-/g,'');
+  document.querySelectorAll('.js-tel').forEach(function(a){ a.href = telHref; });
+  document.querySelectorAll('.js-phone').forEach(function(el){ el.textContent = 설정.전화번호; });
+
+  // 주소 · 영업시간
+  document.querySelectorAll('.js-addr').forEach(function(el){ el.textContent = 설정.주소; });
+  document.querySelectorAll('.js-hours').forEach(function(el){ el.textContent = 설정.영업시간; });
+
+  // 검색 안내 문구
+  document.querySelectorAll('.js-search').forEach(function(el){ el.textContent = 설정.검색안내; });
+
+  // 검색엔진용 설명문에도 전화번호 반영
+  var meta = document.querySelector('meta[name="description"]');
+  if(meta){ meta.content = meta.content + ' 문의 ' + 설정.전화번호; }
+
+  // 요금표
+  function 표채우기(id, rows){
+    document.getElementById(id).innerHTML = rows.map(function(r){
+      return '<tr><td>'+r[0]+'</td><td><strong>'+r[1]+'</strong></td><td>'+r[2]+'</td></tr>';
+    }).join('');
+  }
+  표채우기('wd-body', 설정.평일요금);
+  표채우기('wk-body', 설정.주말요금);
+
+  // 요금 안내 문구
+  document.getElementById('price-notes').innerHTML =
+    설정.요금안내.map(function(t){ return '<li>'+t+'</li>'; }).join('');
+
+  // 먹거리 · 용품 메뉴
+  function 메뉴채우기(id, rows){
+    document.getElementById(id).innerHTML = rows.map(function(r){
+      return '<div class="mrow"><span>'+r[0]+'</span><b>'+r[1]+'</b></div>';
+    }).join('');
+  }
+  메뉴채우기('mlist-food', 설정.먹거리);
+  메뉴채우기('mlist-goods', 설정.용품);
+
+  // 메뉴 옆 사진 (사진 파일이 아직 없으면 자동으로 숨겨짐)
+  document.getElementById('food-imgs').innerHTML =
+    설정.음식사진.map(function(r){
+      return '<img src="'+r[0]+'" alt="'+r[1]+'" loading="lazy" onerror="this.style.display=\'none\'">';
+    }).join('');
+
+  // 이벤트 · 혜택 카드
+  document.getElementById('event-list').innerHTML =
+    설정.이벤트.map(function(r){
+      return '<div class="card ev-card"><div class="ic">'+r[0]+'</div><div class="ev-tag">'+r[1]+'</div><h3>'+r[2]+'</h3><p>'+r[3]+'</p></div>';
+    }).join('');
+
+  // 무인 매장 이용 방법 ({전화번호} 자리에 전화번호 자동 입력)
+  document.getElementById('steps-list').innerHTML =
+    설정.이용방법.map(function(r){
+      var 설명 = r[1].split('{전화번호}').join(설정.전화번호);
+      return '<div class="step"><div><h3>'+r[0]+'</h3><p>'+설명+'</p></div></div>';
+    }).join('');
+
+  // 갤러리
+  document.getElementById('gal-list').innerHTML =
+    설정.갤러리.map(function(r){
+      return '<img src="'+r[0]+'" alt="'+r[1]+'" loading="lazy">';
+    }).join('');
+})();
+</script>
+</body>
+</html>
