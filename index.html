@@ -40,7 +40,9 @@ const 설정 = {
      "<s style='color:#77828f'>13,000원</s><br>12,000원"],
     ["10:00 ~ 13:00", "14,000원", "11,000원"],
     ["13:00 ~ 17:00", "18,000원", "15,000원"],
-    ["17:00 ~ 22:00", "20,000원", "18,000원"],
+    ["17:00 ~ 22:00",
+     "20,000원<br><span style='color:#3ddc84;font-size:.85em'>무인 전환 시 18,000원</span>",
+     "18,000원<br><span style='color:#3ddc84;font-size:.85em'>무인 전환 시 16,000원</span>"],
     ["22:00 ~ 익일 01:00 🌙심야",
      "<s style='color:#77828f;font-weight:400'>16,000원</s><br>키오스크 결제 시 15,000원<br><span style='color:#3ddc84;font-size:.85em'>(+3% 적립)</span>",
      "<s style='color:#77828f'>16,000원</s><br>15,000원"],
@@ -60,7 +62,6 @@ const 설정 = {
 
   // ── 요금표 아래 안내 문구 ──
   요금안내: [
-    "🎑 <strong style=\"color:#ffd76a\">추석 연휴 할인</strong> — 9/24(목) 15:00 ~ 9/27(일) 01:00 전 시간대 <strong>15,000원</strong> (무인 운영)",
     "🌙 이제 24시간, 언제든지! 무인 시스템으로 새벽에도 라운딩",
     "⏱️ 1인 1시간 1게임 기준",
     "🅿️ 주차 5시간 무료 (키오스크·카운터 태블릿에서 주차 등록)",
@@ -118,8 +119,6 @@ const 설정 = {
 
   // ── 이벤트 · 혜택 카드  ["아이콘", "작은제목", "큰제목", "설명"], ──
   이벤트: [
-    ["🎑", "추석 연휴 한정", "9/24(목) 15시 ~ 9/27(일) 01시 15,000원",
-     "연휴 기간 전 시간대 1인 15,000원! 이 시간에는 무인 운영입니다. 예약은 youngscreen.co.kr 또는 김캐디 앱."],
     ["💳", "선불권 충전 혜택", "최대 10% 추가 적립",
      "30만원 충전 → +5% (15,000원) · 50만원 충전 → +10% (50,000원) 추가 적립. 유효기간 충전일로부터 1년, 충전 고객께는 개인 락커 무료 제공!"],
     ["⛳", "연속 플레이 혜택", "이어서 치면 2,000원 할인",
@@ -328,7 +327,7 @@ const 설정 = {
           <tr><td>01:00 ~ 10:00 🌙심야</td><td><strong><s style="color:#77828f;font-weight:400">13,000원</s><br>키오스크 결제 시 12,000원<br><span style="color:#3ddc84;font-size:.85em">(+3% 적립)</span></strong></td><td><s style="color:#77828f">13,000원</s><br>12,000원</td></tr>
           <tr><td>10:00 ~ 13:00</td><td><strong>14,000원</strong></td><td>11,000원</td></tr>
           <tr><td>13:00 ~ 17:00</td><td><strong>18,000원</strong></td><td>15,000원</td></tr>
-          <tr><td>17:00 ~ 22:00</td><td><strong>20,000원</strong></td><td>18,000원</td></tr>
+          <tr><td>17:00 ~ 22:00</td><td><strong>20,000원<br><span style="color:#3ddc84;font-size:.85em">무인 전환 시 18,000원</span></strong></td><td>18,000원<br><span style="color:#3ddc84;font-size:.85em">무인 전환 시 16,000원</span></td></tr>
           <tr><td>22:00 ~ 익일 01:00 🌙심야</td><td><strong><s style="color:#77828f;font-weight:400">16,000원</s><br>키오스크 결제 시 15,000원<br><span style="color:#3ddc84;font-size:.85em">(+3% 적립)</span></strong></td><td><s style="color:#77828f">16,000원</s><br>15,000원</td></tr>
         </tbody>
       </table>
@@ -345,7 +344,6 @@ const 설정 = {
       </table>
     </div>
     <ul class="note" id="price-notes">
-      <li>🎑 <strong style="color:#ffd76a">추석 연휴 할인</strong> — 9/24(목) 15:00 ~ 9/27(일) 01:00 전 시간대 <strong>15,000원</strong> (무인 운영)</li>
       <li>🌙 이제 24시간, 언제든지! 무인 시스템으로 새벽에도 라운딩</li>
       <li>⏱️ 1인 1시간 1게임 기준</li>
       <li>🅿️ 주차 5시간 무료 (키오스크·카운터 태블릿에서 주차 등록)</li>
@@ -364,7 +362,6 @@ const 설정 = {
     <h2>이벤트 · 혜택</h2>
     <p class="desc">24시간 무인 전환 기념, 알뜰하게 이용하세요.</p>
     <div class="grid g4" id="event-list">
-      <div class="card ev-card"><div class="ic">🎑</div><div class="ev-tag">추석 연휴 한정</div><h3>9/24(목) 15시 ~ 9/27(일) 01시 15,000원</h3><p>연휴 기간 전 시간대 1인 15,000원! 이 시간에는 무인 운영입니다. 예약은 youngscreen.co.kr 또는 김캐디 앱.</p></div>
       <div class="card ev-card"><div class="ic">💳</div><div class="ev-tag">선불권 충전 혜택</div><h3>최대 10% 추가 적립</h3><p>30만원 충전 → +5% (15,000원) · 50만원 충전 → +10% (50,000원) 추가 적립. 유효기간 충전일로부터 1년, 충전 고객께는 개인 락커 무료 제공!</p></div>
       <div class="card ev-card"><div class="ic">⛳</div><div class="ev-tag">연속 플레이 혜택</div><h3>이어서 치면 2,000원 할인</h3><p>치다 보면 아쉬운 한 게임! 두 게임 연속 플레이 시 2,000원 할인됩니다.</p></div>
       <div class="card ev-card"><div class="ic">🎯</div><div class="ev-tag">연습 패키지</div><h3>연습권 10회 150,000원</h3><p>1회 1시간 · 회당 15,000원. 결제 시 원포인트 제공!</p></div>
